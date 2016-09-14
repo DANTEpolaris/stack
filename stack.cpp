@@ -28,6 +28,7 @@ int main()
 	a.push(3);
 	stack<int> b;
 	b.push(2);
+	a=b;
 	system("pause");
 }
 
