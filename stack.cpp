@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 #include <stdlib.h>
 #include <iostream>
@@ -8,6 +7,7 @@ class stack
 {
 public:
 	stack();
+	stack(stack const &);
 	~stack();
 	size_t count() const;
 	auto push(T const &) -> void;
@@ -44,6 +44,17 @@ stack<T>::stack()
 	count_ = 0;
 }
 
+template<typename T>
+stack<T>::stack(stack const & item)
+{
+	array_size_ = item.array_size_;
+	count_ = item.count_;
+	T * buff = new T[array_size_];
+	copy(array_, array_ + array_size_, buff);
+	delete[] array_;
+	array_ = buff;
+}
+
 template <typename T>
 stack<T>::~stack()
 {
@@ -51,20 +62,19 @@ stack<T>::~stack()
 }
 
 template<typename T>
-void stack<T>::push(T const &item) {
+auto stack<T>::push(T const & item) -> void {
 	if (count_ == array_size_) {
-		count_++;
-		size_t size = array_size_ * 2 + (aray_size == 0);
+		size_t size = array_size_ * 2 + (array_size_ == 0) ;
 		T * buff = new T[size];
-		for (int i = 0; i < count_; i++) {
-			buff[i] = array_[i];
-		}
+		copy(array_, array_ + array_size_, buff);
 		delete[] array_;
 		array_ = buff;
 		array_size_ = size;
-		array_[count_ - 1] = item;
 	}
+	++count_;
+	array_[count_ - 1] = item;
 }
+
 template<typename T>
 T stack<T>::pop() {
 	if (count_ == 0) {
