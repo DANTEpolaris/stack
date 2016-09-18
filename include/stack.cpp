@@ -76,7 +76,7 @@ template<typename T>
 auto stack<T>::copy_(T * item, size_t size, size_t count) -> T {
 	T * buff = new T[size];
 	copy(item, item + count, buff);
-	retturn buff;
+	return buff;
 }
 
 template<typename T>
