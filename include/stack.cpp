@@ -12,7 +12,7 @@ public:
 	~stack();
 	size_t count() const;
 	auto push(T const &) -> void;
-	stack<T>::copy_(T * item, size_t size, size_t count) -> void;
+	auto copy_(T * item, size_t size, size_t count) -> void;
 	T pop();
 	auto operator=(stack const & right)->stack &;
 private:
@@ -75,7 +75,7 @@ auto stack<T>::push(T const & item) -> void {
 	array_[count_ - 1] = item;
 }
 template<typename T>
-template stack<T>::copy_(T * item, size_t size, size_t count) -> void {
+auto stack<T>::copy_(T * item, size_t size, size_t count) -> void {
 	T * buff = new T[size];
 	copy(item, item + count, buff);
 }
