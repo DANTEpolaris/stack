@@ -1,3 +1,6 @@
+#ifndef stack_cpp
+#define stack_cpp
+#pragma once
 #include <iostream>
 using namespace std;
 template <typename T>
@@ -90,3 +93,5 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 	copy(right.array_, right.array_ + count_, array_);	}
 	return *this;
 }
+
+#endif
