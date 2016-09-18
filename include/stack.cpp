@@ -1,5 +1,3 @@
-#include "stdafx.h"
-#include <stdlib.h>
 #include <iostream>
 using namespace std;
 template <typename T>
