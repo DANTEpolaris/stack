@@ -20,18 +20,6 @@ private:
 	size_t count_;
 };
 
-int main()
-{
-	stack<int> a;
-	a.push(1);
-	a.push(2);
-	a.push(3);
-	stack<int> b;
-	b.push(2);
-	a = b;
-	system("pause");
-}
-
 template <typename T>
 size_t stack<T>::count() const
 {
