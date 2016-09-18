@@ -12,7 +12,7 @@ public:
 	~stack();
 	size_t count() const;
 	auto push(T const &) -> void;
-	auto copy_(T * item, size_t size, size_t count) -> T;
+	auto copy_(T * item, size_t size, size_t count) -> T*;
 	T pop();
 	auto operator=(stack const & right)->stack &;
 private:
