@@ -73,7 +73,7 @@ auto stack<T>::push(T const & item) -> void {
 	array_[count_ - 1] = item;
 }
 template<typename T>
-auto stack<T>::copy_(T * item, size_t size, size_t count) -> T {
+auto stack<T>::copy_(T * item, size_t size, size_t count) -> T* {
 	T * buff = new T[size];
 	copy(item, item + count, buff);
 	return buff;
