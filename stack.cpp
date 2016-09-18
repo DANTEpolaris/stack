@@ -17,19 +17,11 @@ private:
 	T * array_;
 	size_t array_size_;
 	size_t count_;
-	auto swap(stack & right) -> void;
 };
 
 int main()
 {
-	stack<int> a;
-	a.push(1);
-	a.push(2);
-	a.push(3);
-	stack<int> b;
-	b.push(2);
-	a=b;
-	system("pause");
+
 }
 
 template <typename T>
@@ -84,19 +76,12 @@ T stack<T>::pop() {
 	return array_[--count_];
 }
 template<typename T>
-auto stack<T>::swap(stack & right) -> void {
-	array_size_ = right.array_size_;
-	count_ = right.count_;
-	T * buff = new T[array_size_];
-	std::swap(buff, array_);
-	std::swap(buff, right.array_);
-	std::swap(buff, array_);
-}
-
-template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
-		(stack(right)).swap(*this);
-	}
+	delete[] array_;
+	count_ = right.count_;
+	array_size_ = right.array_size_;
+	array_ = new T[array_size_];
+	copy(right.array_, right.array_ + count_, array_);	}
 	return *this;
 }
