@@ -12,7 +12,7 @@ public:
 	~stack();
 	size_t count() const;
 	auto push(T const &) -> void;
-	auto copy_(T * item, size_t size, size_t count) -> void;
+	auto copy_(T * item, size_t size, size_t count) -> T;
 	T pop();
 	auto operator=(stack const & right)->stack &;
 private:
@@ -51,9 +51,8 @@ stack<T>::stack(stack const & item)
 {
 	array_size_ = item.array_size_;
 	count_ = item.count_;
-	copy_(array_, array_size_, array_size_);
 	delete[] array_;
-	array_ = buff;
+	array_ = copy_(array_, array_size_, array_size_);;
 }
 
 template <typename T>
@@ -66,18 +65,18 @@ template<typename T>
 auto stack<T>::push(T const & item) -> void {
 	if (count_ == array_size_) {
 		size_t size = array_size_ * 2 + (array_size_ == 0) ;
-		copy_(array_, size, array_size_);
 		delete[] array_;
-		array_ = buff;
+		array_ = copy_(array_, size, array_size_);
 		array_size_ = size;
 	}
 	++count_;
 	array_[count_ - 1] = item;
 }
 template<typename T>
-auto stack<T>::copy_(T * item, size_t size, size_t count) -> void {
+auto stack<T>::copy_(T * item, size_t size, size_t count) -> T {
 	T * buff = new T[size];
 	copy(item, item + count, buff);
+	retturn buff;
 }
 
 template<typename T>
