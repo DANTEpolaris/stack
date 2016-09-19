@@ -3,7 +3,7 @@
 #pragma once
 #include <iostream>
 using namespace std;
-template<typename>
+template<typename T>
 auto newcopy(T * item, size_t size, size_t count) -> T*
 {
 	T * buff = new T[size];
