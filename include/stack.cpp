@@ -53,13 +53,14 @@ template<typename T>
 auto stack<T>::push(T const & item) -> void {
 	if (count_ == array_size_) {
 		size_t size = array_size_ * 2 + (array_size_ == 0) ;
-		delete[] array_;
 		array_ = newcopy(array_, size, array_size_);
+		delete[] array_;
 		array_size_ = size;
 	}
+	array_[count_] = item;
 	++count_;
-	array_[count_ - 1] = item;
 }
+
 
 template<typename T>
 T stack<T>::pop() {
