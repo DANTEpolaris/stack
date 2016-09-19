@@ -32,7 +32,7 @@ size_t stack<T>::count() const
 	return count_;
 }
 template <typename T>
-stack<T>::stack():array_size_(0), count(0), array_(new T[array_size_])
+stack<T>::stack():array_size_(0), count_(0), array_(new T[array_size_])
 {
 
 }
