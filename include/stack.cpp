@@ -73,10 +73,11 @@ T stack<T>::pop() {
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
+	T* buff = newcopy(right.array_, right.array_size_, right.count_);
 	delete[] array_;
+	array_ = buff;
 	count_ = right.count_;
 	array_size_ = right.array_size_;
-	newcopy(right.array_, array_size_, count_);
 	}
 	return *this;
 }
