@@ -36,12 +36,9 @@ stack<T>::stack()
 }
 
 template<typename T>
-stack<T>::stack(stack const & item)
+stack<T>::stack(stack const & item):array_size_(item.array_size_), count_(item.count_),array_(copy_(item.array_, item.array_size_,item.count_))
 {
-	array_size_ = item.array_size_;
-	count_ = item.count_;
-	delete[] array_;
-	array_ = copy_(array_, array_size_, array_size_);;
+
 }
 
 template <typename T>
