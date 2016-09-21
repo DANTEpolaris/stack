@@ -40,6 +40,6 @@ SCENARIO("copy", "[copy]"){
   REQUIRE(a.pop()==1);
 }
 SCENARIO("test", "[test]"){
-  stack<int> s();
+  stack<int> s;
   REQUIRE(s.count()==0);
 }
