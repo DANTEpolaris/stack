@@ -98,7 +98,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 }
 
 template<typename T>
-bool empty() const{
+bool stack<T>::empty() const{
 	if (count_ == 0){
 		return true;
 	} else{
