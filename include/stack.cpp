@@ -22,7 +22,7 @@ public:
 	void pop(); //strong
 	T top() const; //strong
 	auto operator=(stack const & right)->stack &; //strong
-	bool empty() const; //noexcept
+	auto empty() const -> bool; //noexcept
 
 private:
 	T * array_;
@@ -98,7 +98,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 }
 
 template<typename T>
-bool stack<T>::empty() const{
+auto stack<T>::empty() const -> bool{
 	if (count_ == 0){
 		return true;
 	} else{
