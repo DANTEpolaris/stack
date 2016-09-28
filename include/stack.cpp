@@ -18,7 +18,7 @@ public:
 	stack(stack const &);  //strong
 	~stack(); //noexcept
 	size_t count() const;  //noexcept
-	auto push(T const &) -> void; /*strong*/
+	auto push(T const &) -> void; //strong
 	void pop(); //strong
 	T top() const; //strong
 	auto operator=(stack const & right)->stack &; //strong
@@ -75,7 +75,7 @@ void stack<T>::pop() {
 
 
 template<typename T>
-const T& stack<T>::top() const /*strong*/
+T stack<T>::top() const 
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
