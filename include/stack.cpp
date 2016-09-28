@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 template<typename T>
-auto newcopy( const T * item, size_t size, size_t count) -> T*
+auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
 	copy(item, item + count, buff);
@@ -14,13 +14,14 @@ template <typename T>
 class stack
 {
 public:
-	stack();
-	stack(stack const &);
-	~stack();
-	size_t count() const;
-	auto push(T const &) -> void;
-	T pop();
-	auto operator=(stack const & right)->stack &;
+	stack(); //noexcept
+	stack(stack const &);  //strong
+	~stack(); //noexcept
+	size_t count() const;  //noexcept
+	auto push(T const &) -> void; /*strong*/
+	void T pop(); //strong
+	T top() const; //strong
+	auto operator=(stack const & right)->stack &; //strong
 private:
 	T * array_;
 	size_t array_size_;
@@ -64,12 +65,24 @@ auto stack<T>::push(T const & item) -> void {
 
 
 template<typename T>
-T stack<T>::pop() {
+void stack<T>::pop() {
 	if (count_ == 0) {
 		throw std::logic_error("Stack is empty!");
+	} else {
+		count_--;
 	}
-	return array_[--count_];
 }
+
+
+template<typename T>
+const T& stack<T>::top() const /*strong*/
+{
+	if (count_ == 0) {
+		throw ("Stack is empty!");
+	}
+	return array_[count_ - 1];
+}
+
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
