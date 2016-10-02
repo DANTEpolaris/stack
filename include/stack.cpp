@@ -7,8 +7,13 @@ template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
-	copy(item, item + count, buff);
-	return buff;	
+	try {
+		copy(item, item + count, buff)
+	}
+	catch(...){
+		delete[] buff;	
+	}
+		return buff;
 }
 template <typename T>
 class stack
