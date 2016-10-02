@@ -8,7 +8,7 @@ auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
 	try {
-		copy(item, item + count, buff)
+		copy(item, item + count, buff);
 	}
 	catch(...){
 		delete[] buff;	
