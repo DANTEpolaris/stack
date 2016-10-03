@@ -88,8 +88,8 @@ T stack<T>::pop() {
 	return array_[--count_];
 }
 
-template<typename T>
-/*T stack<T>::top() const 
+/*template<typename T>
+T stack<T>::top() const 
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
