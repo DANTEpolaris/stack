@@ -16,12 +16,12 @@ SCENARIO("push", "[push]"){
   REQUIRE(s.top()==1);
 }
 
-SCENARIO("top", "[top]"){
+/*SCENARIO("top", "[top]"){
   stack<int> s;
   s.push(1);
   REQUIRE(s.count()==1);
   REQUIRE(s.top()==1);
-}
+}*/
 
 SCENARIO("pop", "[pop]"){
   stack<int> s;
