@@ -26,7 +26,7 @@ public:
 	size_t count() const;  //noexcept
 	auto push(T const &) -> void; //strong
 	T pop(); //strong
-	//T top() const; //strong
+	T top() const; //strong
 	auto operator=(stack const & right)->stack &; //strong
 	//auto empty() const -> bool; //noexcept
 
@@ -72,30 +72,24 @@ auto stack<T>::push(T const & item) -> void {
 }
 
 
-/*template<typename T>
+template<typename T>
 void stack<T>::pop() {
 	if (count_ == 0) {
 		throw std::logic_error("Stack is empty!");
 	} else {
 		count_--;
 	}
-}*/
-template<typename T>
-T stack<T>::pop() {
-	if (count_ == 0) {
-		throw std::logic_error("Stack is empty!");
-	}
-	return array_[--count_];
 }
 
-/*template<typename T>
+
+template<typename T>
 T stack<T>::top() const 
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
 	}
 	return array_[count_ - 1];
-}*/
+}
 
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
