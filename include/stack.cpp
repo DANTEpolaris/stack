@@ -12,6 +12,7 @@ auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 	}
 	catch(...){
 		delete[] buff;	
+		throw;
 	}
 		return buff;
 }
