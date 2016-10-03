@@ -25,7 +25,7 @@ public:
 	~stack(); //noexcept
 	size_t count() const;  //noexcept
 	auto push(T const &) -> void; //strong
-	void T pop(); //strong
+	void pop(); //strong
 	T top() const; //strong
 	auto operator=(stack const & right)->stack &; //strong
 	//auto empty() const -> bool; //noexcept
