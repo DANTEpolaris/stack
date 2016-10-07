@@ -7,14 +7,8 @@ template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
-	try {
-		copy(item, item + count, buff);
-	}
-	catch(...){
-		delete[] buff;	
-		throw;
-	}
-		return buff;
+	copy(item, item + count, buff);
+	return buff;	
 }
 template <typename T>
 class stack
@@ -26,7 +20,7 @@ public:
 	size_t count() const;  //noexcept
 	auto push(T const &) -> void; //strong
 	void pop(); //strong
-	T top() const; //strong
+	const T& top(); //strong
 	auto operator=(stack const & right)->stack &; //strong
 	auto empty() const -> bool; //noexcept
 
@@ -83,7 +77,7 @@ void stack<T>::pop() {
 
 
 template<typename T>
-T stack<T>::top() const 
+const T& stack<T>::top(){
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
