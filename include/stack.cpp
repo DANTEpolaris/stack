@@ -77,7 +77,7 @@ void stack<T>::pop() {
 
 
 template<typename T>
-const T& stack<T>::top(){
+const T& stack<T>::top()
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
