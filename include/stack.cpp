@@ -7,17 +7,48 @@ template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
-	try {
-		copy(item, item + count, buff);
-	}
-	catch(...){
-		delete[] buff;	
-		throw;
-	}
-		return buff;
+	copy(item, item + count, buff);
+	return buff;	
 }
+
 template <typename T>
-class stack
+class allocator
+{
+protected:
+    allocator(size_t size = 0);
+    ~allocator();
+    auto swap(allocator & other) -> void;
+    
+    allocator(allocator const &) = delete;
+    auto operator =(allocator const &) -> allocator & = delete;
+    
+    T * ptr_;
+    size_t size_;
+    size_t count_;
+};
+
+template<typename T>
+allocator<T>::allocator(size_t size) :
+	ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))),
+	size_(0),
+	count_(size) {
+}
+
+template<typename T>
+allocator<T>::~allocator() {
+	delete ptr_;
+}
+
+template<typename T>
+auto allocator<T>::swap(allocator & other) -> void {
+	std::swap(ptr_, other.ptr_);
+	std::swap(count_, other.count_);
+	std::swap(size_, other.size_);
+}
+
+
+template <typename T>
+class stack : protected allocator<T>
 {
 public:
 	stack(); //noexcept
@@ -25,10 +56,10 @@ public:
 	~stack(); //noexcept
 	size_t count() const;  //noexcept
 	auto push(T const &) -> void; //strong
-	T pop(); //basic
-	//T top() const; //strong
+	void pop(); //strong
+	const T& top(); //strong
 	auto operator=(stack const & right)->stack &; //strong
-	//auto empty() const -> bool; //noexcept
+	auto empty() const -> bool; //noexcept
 
 private:
 	T * array_;
@@ -72,30 +103,24 @@ auto stack<T>::push(T const & item) -> void {
 }
 
 
-/*template<typename T>
+template<typename T>
 void stack<T>::pop() {
 	if (count_ == 0) {
 		throw std::logic_error("Stack is empty!");
 	} else {
 		count_--;
 	}
-}*/
-template<typename T>
-T stack<T>::pop() {
-	if (count_ == 0) {
-		throw std::logic_error("Stack is empty!");
-	}
-	return array_[--count_];
 }
 
-/*template<typename T>
-T stack<T>::top() const 
+
+template<typename T>
+const T& stack<T>::top()
 {
 	if (count_ == 0) {
 		throw ("Stack is empty!");
 	}
 	return array_[count_ - 1];
-}*/
+}
 
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
@@ -108,7 +133,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 	}
 	return *this;
 }
-/*
+
 template<typename T>
 auto stack<T>::empty() const -> bool{
 	if (count_ == 0){
@@ -117,5 +142,5 @@ auto stack<T>::empty() const -> bool{
 		return false;
 	}
 }
-*/
+
 #endif
