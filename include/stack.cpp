@@ -28,14 +28,14 @@ protected:
 };
 
 template<typename T>
-allocator<T>::allocator(size_t size) :
+inline allocator<T>::allocator(size_t size) :
 	ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))),
 	size_(0),
 	count_(size) {
 }
 
 template<typename T>
-allocator<T>::~allocator() {
+inline allocator<T>::~allocator() {
 	delete ptr_;
 }
 
