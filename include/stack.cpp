@@ -2,7 +2,7 @@
 #define stack_cpp
 #pragma once
 #include <iostream>
-using namespace std;
+//using namespace std;
 template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
