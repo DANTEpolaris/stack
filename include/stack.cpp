@@ -76,10 +76,6 @@ size_t stack<T>::count() const
 }
 template <typename T>
 stack<T>::stack():allocator<T>(){}
-{
-
-}
-
 
 template <typename T>
 stack<T>::stack(const stack& item) : allocator<T>(item.size_){
