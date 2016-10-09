@@ -2,7 +2,6 @@
 #define stack_cpp
 #pragma once
 #include <iostream>
-//using namespace std;
 template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
@@ -19,9 +18,44 @@ auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 		return buff;	
 }
 
+template <typename T>
+class allocator
+{
+protected:
+    allocator(size_t size = 0);
+    ~allocator();
+    auto swap(allocator & other) -> void;
+    
+    allocator(allocator const &) = delete;
+    auto operator =(allocator const &) -> allocator & = delete;
+    
+    T * ptr_;
+    size_t size_;
+    size_t count_;
+};
+
+template<typename T>
+allocator<T>::allocator(size_t size) :
+	ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))),
+	size_(0),
+	count_(size) {
+}
+
+template<typename T>
+allocator<T>::~allocator() {
+	delete ptr_;
+}
+
+template<typename T>
+auto allocator<T>::swap(allocator & other) -> void {
+	std::swap(ptr_, other.ptr_);
+	std::swap(count_, other.count_);
+	std::swap(size_, other.size_);
+}
+
 
 template <typename T>
-class stack
+class stack : protected allocator<T>
 {
 public:
 	stack(); //noexcept
@@ -32,6 +66,7 @@ public:
 	void pop(); //strong
 	const T& top(); //strong
 	auto operator=(stack const & right)->stack &; //strong
+	auto empty() const -> bool; //noexcept
 
 private:
 	T * array_;
@@ -104,6 +139,15 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 	array_size_ = right.array_size_;
 	}
 	return *this;
+}
+
+template<typename T>
+auto stack<T>::empty() const -> bool{
+	if (count_ == 0){
+		return true;
+	} else{
+		return false;
+	}
 }
 
 #endif
