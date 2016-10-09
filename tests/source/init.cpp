@@ -52,7 +52,3 @@ SCENARIO("test", "[test]"){
   stack<int> s;
   REQUIRE(s.count()==0);
 }
-SCENARIO("empty", "[empty]"){
-  stack<int> s;
-  REQUIRE(s.empty()==true);
-}
