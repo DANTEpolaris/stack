@@ -7,8 +7,16 @@ template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
-	std::copy(item, item + count, buff);
-	return buff;	
+	try
+	{
+		std::copy(item, item + count, buff);
+	}
+	catch(...)
+	{
+		delete[] buff; 
+		throw;
+	}
+		return buff;	
 }
 
 template <typename T>
