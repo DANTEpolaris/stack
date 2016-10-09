@@ -106,10 +106,10 @@ auto stack<T>::push(T const & item) -> void {
 
 template<typename T>
 void stack<T>::pop() {
-	if (allocator::count_ == 0) {
+	if (allocator<T>::count_ == 0) {
 		throw std::logic_error("Stack is empty!");
 	} else {
-		allocator::count_--;
+		allocator<T>::count_--;
 	}
 }
 
@@ -117,10 +117,10 @@ void stack<T>::pop() {
 template<typename T>
 const T& stack<T>::top()
 {
-	if (allocator::count_ == 0) {
+	if (allocator<T>::count_ == 0) {
 		throw ("Stack is empty!");
 	}
-	return allocator::ptr_[allocator::count_ - 1];
+	return allocator<T>::ptr_[allocator<T>::count_ - 1];
 }
 
 template<typename T>
@@ -137,7 +137,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 
 template<typename T>
 auto stack<T>::empty() const -> bool{
-	if (allocator::count_ == 0){
+	if (allocator<T>::count_ == 0){
 		return true;
 	} else{
 		return false;
