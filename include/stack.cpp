@@ -72,7 +72,7 @@ public:
 template <typename T>
 size_t stack<T>::count() const
 {
-	return allocator::count_;
+	return allocator<T>::count_;
 }
 template <typename T>
 stack<T>::stack():allocator(){}
