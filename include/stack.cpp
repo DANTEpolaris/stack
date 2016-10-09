@@ -124,7 +124,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
 	T* buff = newcopy(right.allocator<T>::ptr_, right.allocator<T>::size_, right.allocator<T>::count_);
 	delete[] allocator<T>::ptr_;
-	allocator<T>::ptr = buff;
+	allocator<T>::ptr_ = buff;
 	allocator<T>::count_ = right.allocator<T>::count_;
 	allocator<T>::size_ = right.allocator<T>::size_;
 	}
