@@ -2,7 +2,26 @@
 #define stack_cpp
 #pragma once
 #include <iostream>
-template<typename T>
+
+template <typename T1, typename T2>
+void construct(T1 * ptr, T2 const & value) {
+    new(ptr) T1 (value);
+}
+
+template <typename T>
+void destroy(T * ptr) noexcept
+{
+    ptr->~T();
+}
+
+template <typename FwdIter>
+void destroy(FwdIter first, FwdIter last) noexcept
+{
+    for (; first != last; ++first) {
+        destroy(&*first);
+    }
+}
+/*template<typename T>
 auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 {
 	T * buff = new T[size];
@@ -16,7 +35,7 @@ auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
 		throw;
 	}
 		return buff;	
-}
+}*/
 
 template <typename T>
 class allocator
@@ -55,7 +74,7 @@ auto allocator<T>::swap(allocator & other) -> void {
 
 
 template <typename T>
-class stack : protected allocator<T>
+class stack : private allocator<T>
 {
 public:
 	stack(); //noexcept
@@ -79,15 +98,21 @@ stack<T>::stack():allocator<T>(){}
 
 template <typename T>
 stack<T>::stack(const stack& item) : allocator<T>(item.size_){
+	for (size_t i = 0; i < item.count_; i++) construct(allocator<T>::ptr_ + i, item.ptr_[i]);
+	allocator<T>::count_ = item.count_;
+};
+/*
+template <typename T>
+stack<T>::stack(const stack& item) : allocator<T>(item.size_){
 	allocator<T>::ptr_ = newcopy(item.allocator<T>::ptr_, item.allocator<T>::count_, item.allocator<T>::size_);
 	allocator<T>::count_ = item.allocator<T>::count_;
 };
-
+*/
 template <typename T>
 stack<T>::~stack()
 {
 }
-
+/*
 template<typename T>
 auto stack<T>::push(T const & item) -> void {
 	if (allocator<T>::count_ == allocator<T>::size_) {
@@ -99,6 +124,25 @@ auto stack<T>::push(T const & item) -> void {
 	allocator<T>::ptr_[allocator<T>::count_] = item;
 	++allocator<T>::count_;
 }
+*/
+template <typename T>
+auto stack<T>::push( const T & item ) -> void
+{
+    if ( this->count_ == this->size_ ) {
+        size_t array_size = this->size_ * 2 + ( this->size_ == 0 );
+        
+        stack temp { array_size };
+        while ( temp.count() < this->count_ ) {
+            temp.push( this->ptr_[ temp.count() ] );
+        }
+        
+        this->swap( temp );
+    }
+    
+    construct( this->ptr_ + this->count_, value );
+    ++this->count_;
+}
+
 
 template<typename T>
 void stack<T>::pop() {
