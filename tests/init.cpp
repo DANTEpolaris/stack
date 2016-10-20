@@ -1,7 +1,7 @@
 #include "stack.hpp"
 #include <catch.hpp>
 #include <iostream>
-#using namespace std;
+using namespace std;
 
 SCENARIO("count", "[count]"){
   stack<int> s;
