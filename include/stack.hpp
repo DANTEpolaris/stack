@@ -63,7 +63,7 @@ template <typename T>
 class stack : private allocator<T>
 {
 public:
-	stack(); //noexcept
+	stack(size_t size = 0 ); //noexcept
 	stack(stack const &);  //strong
 	~stack(); //noexcept
 	size_t count() const;  //noexcept
@@ -80,7 +80,7 @@ size_t stack<T>::count() const
 	return allocator<T>::count_;
 }
 template <typename T>
-stack<T>::stack():allocator<T>(){}
+stack<T>::stack(size_t size):allocator<T>(size){}
 
 template <typename T>
 stack<T>::stack(const stack& item) : allocator<T>(item.size_){
