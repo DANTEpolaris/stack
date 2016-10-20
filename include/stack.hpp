@@ -136,9 +136,9 @@ template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
 	stack<T> temp (right.size_);
-	while (temp.count_ < right.count){
+	while (temp.count_ < right.count_){
 		construct(temp.ptr_ + temp.count_, right.ptr_[temp.count_]);
-		++temp.count;
+		++temp.count_;
 	}	
 	this -> swap(temp);
 	}
