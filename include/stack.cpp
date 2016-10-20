@@ -139,7 +139,7 @@ auto stack<T>::push( const T & item ) -> void
         this->swap( temp );
     }
     
-    construct( this->ptr_ + this->count_, value );
+    construct( this->ptr_ + this->count_, item);
     ++this->count_;
 }
 
