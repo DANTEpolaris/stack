@@ -21,21 +21,7 @@ void destroy(FwdIter first, FwdIter last) noexcept
         destroy(&*first);
     }
 }
-/*template<typename T>
-auto newcopy( const T * item, size_t size, size_t count) -> T* //strong
-{
-	T * buff = new T[size];
-	try
-	{
-		std::copy(item, item + count, buff);
-	}
-	catch(...)
-	{
-		delete[] buff; 
-		throw;
-	}
-		return buff;	
-}*/
+
 
 template <typename T>
 class allocator
@@ -101,37 +87,19 @@ stack<T>::stack(const stack& item) : allocator<T>(item.size_){
 	for (size_t i = 0; i < item.count_; i++) construct(allocator<T>::ptr_ + i, item.ptr_[i]);
 	allocator<T>::count_ = item.count_;
 };
-/*
-template <typename T>
-stack<T>::stack(const stack& item) : allocator<T>(item.size_){
-	allocator<T>::ptr_ = newcopy(item.allocator<T>::ptr_, item.allocator<T>::count_, item.allocator<T>::size_);
-	allocator<T>::count_ = item.allocator<T>::count_;
-};
-*/
+
 template <typename T>
 stack<T>::~stack()
 {
 }
-/*
-template<typename T>
-auto stack<T>::push(T const & item) -> void {
-	if (allocator<T>::count_ == allocator<T>::size_) {
-		T * buff = newcopy(allocator<T>::ptr_, allocator<T>::count_,  allocator<T>::size_ = allocator<T>::size_ * 2 + (allocator<T>::count_ == 0));
-		delete allocator<T>::ptr_;
-		allocator<T>::ptr_ = buff;
-		allocator<T>::size_ = allocator<T>::size_ * 2 + (allocator<T>::count_ == 0) ;
-	}
-	allocator<T>::ptr_[allocator<T>::count_] = item;
-	++allocator<T>::count_;
-}
-*/
+
 template <typename T>
 auto stack<T>::push( const T & item ) -> void
 {
     if ( this->count_ == this->size_ ) {
         size_t array_size = this->size_ * 2 + ( this->size_ == 0 );
         
-        stack<T> temp { array_size };
+        stack<T> temp ( array_size );
         while ( temp.count() < this->count_ ) {
             temp.push( this->ptr_[ temp.count() ] );
         }
@@ -167,14 +135,16 @@ const T& stack<T>::top()
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
-	T* buff = newcopy(right.allocator<T>::ptr_, right.allocator<T>::size_, right.allocator<T>::count_);
-	delete[] allocator<T>::ptr_;
-	allocator<T>::ptr_ = buff;
-	allocator<T>::count_ = right.allocator<T>::count_;
-	allocator<T>::size_ = right.allocator<T>::size_;
+	stack<T> temp (right.size_);
+	while (temp.count_ < right.count){
+		construct(temp.ptr_ + temp.count_, right.ptr_[temp.count_]);
+		++temp.count;
+	}	
+	this -> swap(temp);
 	}
 	return *this;
 }
+
 
 template<typename T>
 auto stack<T>::empty() const -> bool{
