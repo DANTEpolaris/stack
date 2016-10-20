@@ -103,7 +103,7 @@ void stack<T>::push(T const &item){
 template<typename T>
 void stack<T>::pop() {
 	if (allocator<T>::count_ == 0) {
-		throw std::logic_error("Stack is empty!");
+		throw ("Stack is empty!");
 	} else {
 		allocator<T>::count_--;
 	}
