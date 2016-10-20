@@ -93,25 +93,18 @@ stack<T>::~stack()
 {
 }
 
+
 template <typename T>
-auto stack<T>::push( const T & item ) -> void
-{
-    if ( this->count_ == this->size_ ) {
-        size_t array_size = this->size_ * 2 + ( this->size_ == 0 );
-        
-        stack<T> temp ( array_size );
-        while ( temp.count() < this->count_ ) {
-            temp.push( this->ptr_[ temp.count() ] );
-        }
-        
-        this->swap( temp );
-    }
-    
-    construct( this->ptr_ + this->count_, item);
-    ++this->count_;
+void stack<T>::push(T const &item){
+	if (allocator<T>::count_ == allocator<T>::size_) {
+		size_t array_size = allocator<T>::size_ * 2 + (allocator<T>::size_ == 0);
+		stack<T> temp(array_size);
+		while (temp.count() < allocator<T>::count_) temp.push(allocator<T>::ptr_[temp.count()]); 
+		this->swap(temp);
+	}
+	construct(allocator<T>::ptr_ + allocator<T>::count_, item);
+	++allocator<T>::count_;
 }
-
-
 
 template<typename T>
 void stack<T>::pop() {
