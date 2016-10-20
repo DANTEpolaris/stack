@@ -39,17 +39,11 @@ protected:
     size_t count_;
 };
 
-template<typename T>
-allocator<T>::allocator(size_t size) :
-	ptr_(static_cast<T *>(size == 0 ? nullptr : operator new(size * sizeof(T)))),
-	size_(0),
-	count_(size) {
-}
+template <typename T>
+allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))), size_(size), count_(0){};
 
 template<typename T>
-allocator<T>::~allocator() {
-	delete ptr_;
-}
+allocator<T>::~allocator(){ operator delete(ptr_); }
 
 template<typename T>
 auto allocator<T>::swap(allocator & other) -> void {
