@@ -101,15 +101,14 @@ void stack<T>::push(T const &item){
 }
 
 template<typename T>
-void stack<T>::pop() {
-	if (allocator<T>::count_ == 0) {
-		throw ("Stack is empty!");
-	} else {
-		allocator<T>::count_--;
+
+void stack<T>::pop()
+{
+	if (allocator<T>::count_> 0) {
+		--allocator<T>::count_;
 	}
+	else throw ("Stack is empty");
 }
-
-
 template<typename T>
 const T& stack<T>::top()
 {
