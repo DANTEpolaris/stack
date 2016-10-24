@@ -85,6 +85,7 @@ stack<T>::stack(const stack& item) : allocator<T>(item.size_){
 template <typename T>
 stack<T>::~stack()
 {
+destroy(allocator<T>::ptr_, allocator<T>::ptr_ + allocator<T>::count_);
 }
 
 
