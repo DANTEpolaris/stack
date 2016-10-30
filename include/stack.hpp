@@ -3,24 +3,6 @@
 #pragma once
 #include <iostream>
 #include <memory>
-template <typename T1, typename T2>
-void construct(T1 * ptr, T2 const & value) {
-	new(ptr) T1(value);
-}
-
-template <typename T>
-void destroy(T * ptr) noexcept
-{
-	ptr->~T();
-}
-
-template <typename FwdIter>
-void destroy(FwdIter first, FwdIter last) noexcept
-{
-	for (; first != last; ++first) {
-		destroy(&*first);
-	}
-}
 
 class bitset
 {
@@ -47,45 +29,42 @@ private:
 	size_t counter_;
 };
 
-	template<typename T>
-	bitset::bitset(size_t size) : ptr_(std::make_unique<bool[]>(size)), size_(size), counter_(0) {}
+bitset::bitset(size_t size) : ptr_(std::make_unique<bool[]>(size)), size_(size), counter_(0) {}
 
-	auto bitset::set(size_t index) -> void
-	{ if (index >= 0 && index < size_) {
-		ptr_[index] = true; 
-		++counter_; }
+auto bitset::set(size_t index) -> void
+{ if (index >= 0 && index < size_) {
+	ptr_[index] = true; 
+	++counter_; }
 	else throw; 
-	}
+}
 
-	auto bitset::reset(size_t index) -> void
-	{	if (index >= 0 && index < size_)
-		{
-			ptr_[index] = false;
-			--counter_;
-		}
+auto bitset::reset(size_t index) -> void
+{	if (index >= 0 && index < size_)
+	{
+		ptr_[index] = false;
+		--counter_;
+	}
+else throw;
+}
+
+auto bitset::test(size_t index) -> bool
+{
+	if (index >= 0 && index < size_)
+	{
+		return !ptr_[index];
+	}
 	else throw;
-	}
+	
+}
+auto bitset::size() -> size_t
+{
+	return size_;
+}
 
-	auto bitset::test(size_t index) -> bool
-	{
-		if (index >= 0 && index < size_)
-		{
-			return !ptr_[index];
-		}
-		else throw;
-		
-	}
-
-	auto bitset::size() -> size_t
-	{
-		return size_;
-	}
-
-	auto bitset::counter() -> size_t
-	{
-		return counter_;
-	}
-
+auto bitset::counter() -> size_t
+{
+	return counter_;
+}
 	
 
 template <typename T>
