@@ -230,7 +230,7 @@ void stack<T>::pop()
 	else throw_is_empty();
 }
 template<typename T>
-auto stack<T>::top() -> T &;
+auto stack<T>::top() -> T &
 {
 	if (allocator<T>::count_ == 0) {
 		throw_is_empty();
