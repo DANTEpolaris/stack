@@ -124,15 +124,11 @@ template <typename T>
 allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))), size_(size), map_(std::make_unique<bitset>(size)) {};
 
 template<typename T>
-inline allocator<T>::allocator(allocator const & other) :
-	ptr_((T *)(other.size_ == 0 ? nullptr : operator new(other.size_ * sizeof(T)))),
-	size_(other.size_),
-	map_(other.map_) {
-	for (size_t i = 0; i < other.count_; ++i) {
-		if (map_.test(i)) {
-			this->construct(this->ptr_ + i, other.ptr_[i]);
-		}
-	}
+	allocator<T>::allocator(allocator const& other) : 
+ptr_(static_cast<T*>(operator new(other.size_))),
+size_(other.size_), map_(std::make_unique<bitset>(size_)){
+	for (size_t i; i < size_; i++)
+		construct(ptr_ + i, other.ptr_[i]);
 }
 template<typename T>
 allocator<T>::~allocator() { operator delete(ptr_); }
@@ -234,7 +230,7 @@ void stack<T>::pop()
 	else throw_is_empty();
 }
 template<typename T>
-const T& stack<T>::top()
+auto stack<T>::top() -> T &;
 {
 	if (allocator<T>::count_ == 0) {
 		throw_is_empty();
