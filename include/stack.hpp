@@ -211,7 +211,7 @@ stack<T>::stack(size_t size) :allocator<T>(size) {}
 template <typename T>
 void stack<T>::push(T const &item) {
 	if (allocator_.full()) allocator_.resize(); 
-	allocator_.construct(allocator_.get() + this->count(), item;
+	allocator_.construct(allocator_.get() + this->count(), item);
 }
 template<typename T>
 void stack<T>::pop()
