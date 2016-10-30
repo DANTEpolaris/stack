@@ -23,30 +23,7 @@ void destroy(FwdIter first, FwdIter last) noexcept
 }
 
 
-class bitset
-{
-public:
-    explicit
-    bitset( size_t size ) /*strong*/;
-    
-    bitset( bitset const & other ) = delete;
-    auto operator =( bitset const & other ) -> bitset & = delete;
-    
-    bitset( bitset && other ) = delete;
-    auto operator =( bitset && other ) -> bitset & = delete;
-    
-    auto set( size_t index ) /*strong*/ -> void;
-    auto reset( size_t index ) /*strong*/ -> void;
-    auto test( size_t index ) /*strong*/ -> bool;
-    
-    auto size() /*noexcept*/ -> size_t;
-    auto counter() /*noexcept*/ -> size_t;
-    
-private:
-    std::unique_ptr<bool[]>  ptr_;
-    size_t size_;
-    size_t counter_;
-};
+
 
 template <typename T>
 class allocator
