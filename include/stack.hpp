@@ -210,23 +210,14 @@ stack<T>::stack(size_t size) :allocator<T>(size) {}
 
 template <typename T>
 void stack<T>::push(T const &item) {
-	if (allocator<T>::count_ == allocator<T>::size_) {
-		size_t array_size = allocator<T>::size_ * 2 + (allocator<T>::size_ == 0);
-		stack<T> temp(array_size);
-		while (temp.count() < allocator<T>::count_) temp.push(allocator<T>::ptr_[temp.count()]);
-		this->swap(temp);
-	}
-	construct(allocator<T>::ptr_ + allocator<T>::count_, item);
-	++allocator<T>::count_;
-}
-
+	if (allocator_.full()) allocator_.resize(); 
+	allocator_.construct(allocator_.get() + this->count(), value);
 template<typename T>
 
 void stack<T>::pop()
 {
-	if (allocator<T>::count_> 0) {
-		--allocator<T>::count_;
-	}
+	if (this->count() > 0) 
+		allocator_.destroy(allocator_.get() + this->count());
 	else throw_is_empty();
 }
 template<typename T>
