@@ -127,9 +127,9 @@ template<typename T>
 inline allocator<T>::allocator(allocator const & other) :
 	ptr_((T *)(other.size_ == 0 ? nullptr : operator new(other.size_ * sizeof(T)))),
 	size_(other.size_),
-	bitset_(other.bitset_) {
+	map_(other.map_) {
 	for (size_t i = 0; i < other.count_; ++i) {
-		if (bitset_.test(i)) {
+		if (map_.test(i)) {
 			this->construct(this->ptr_ + i, other.ptr_[i]);
 		}
 	}
@@ -157,7 +157,7 @@ auto allocator<T>::construct(T * ptr, T const & value)->void {
 template<typename T>
 auto allocator<T>::destroy(T * ptr) -> void {
 	ptr->~T();
-	map_->reset(ptr-ptr_)
+	map_->reset(ptr-ptr_);
 }
 
 
@@ -200,7 +200,7 @@ auto allocator<T>::empty() const -> bool
 template<typename T>
 auto allocator<T>::swap(allocator & other) -> void {
 	std::swap(ptr_, other.ptr_);
-	std::swap(map_, other.,map_);
+	std::swap(map_, other.map_);
 	std::swap(size_, other.size_);
 }
 
@@ -211,12 +211,6 @@ size_t stack<T>::count() const
 }
 template <typename T>
 stack<T>::stack(size_t size) :allocator<T>(size) {}
-
-template <typename T>
-stack<T>::stack(const stack& item) : allocator<T>(item.size_) {
-	for (size_t i = 0; i < item.count_; i++) construct(allocator<T>::ptr_ + i, item.ptr_[i]);
-	allocator<T>::count_ = item.count_;
-};
 
 template <typename T>
 void stack<T>::push(T const &item) {
