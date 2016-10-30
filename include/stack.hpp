@@ -178,19 +178,19 @@ auto allocator<T>::get() const -> T const * {
 template<typename T>
 auto allocator<T>::count() const -> size_t
 {
-	return map_->counter_;
+	return map_->counter();
 }
 
 template<typename T>
 auto allocator<T>::full() const -> bool
 {
-	return map_->counter_==size_;
+	return map_->counter()==size_;
 }
 
 template<typename T>
 auto allocator<T>::empty() const -> bool
 {
-	return map_->counter_==0;
+	return map_->counter()==0;
 }
 
 template<typename T>
