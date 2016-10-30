@@ -48,7 +48,7 @@ private:
 };
 
 	template<typename T>
-	bitset<T>::bitset(size_t size) : ptr_(std::make_unique<bool[]>(size)), size_(size), counter_(0) {}
+	bitset::bitset(size_t size) : ptr_(std::make_unique<bool[]>(size)), size_(size), counter_(0) {}
 
 	auto bitset::set(size_t index) -> void
 	{ if (index >= 0 && index < size_) {
