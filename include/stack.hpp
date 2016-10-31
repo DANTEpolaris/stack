@@ -245,13 +245,10 @@ auto stack<T>::throw_is_empty() const -> void
 
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
-	if (this != &right) {
 		if (this != &right) {
 		allocator<T>(right.allocator_).swap(allocator_);
 	}
 	return *this;
-}
-
 
 template<typename T>
 auto stack<T>::empty() const -> bool {
