@@ -217,7 +217,7 @@ template<typename T>
 void stack<T>::pop()
 {
 	if (this->count() > 0) 
-		allocator_.destroy(allocator_.get() + this->count());
+		allocator_.destroy(allocator_.get() + (this->count()-1));
 	else throw_is_empty();
 }
 template<typename T>
