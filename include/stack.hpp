@@ -203,10 +203,10 @@ auto allocator<T>::swap(allocator & other) -> void {
 template <typename T>
 size_t stack<T>::count() const
 {
-	return map_->counter();
+	return allocator_.count();
 }
 template <typename T>
-stack<T>::stack(size_t size) :allocator<T>(size) {}
+stack<T>::stack(size_t size) :allocator_.size_ {}
 
 template <typename T>
 void stack<T>::push(T const &item) {
@@ -223,10 +223,10 @@ void stack<T>::pop()
 template<typename T>
 auto stack<T>::top() -> T &
 {
-	if (map_->counter() == 0) {
+	if (allocator_.count() == 0) {
 		throw_is_empty();
 	}
-	return map_->counter()-1;
+	return allocator_.count()-1;
 }
 template<typename T>
 auto stack<T>::top() const -> T const &
@@ -234,7 +234,7 @@ auto stack<T>::top() const -> T const &
 	if (map_->counter() == 0) {
 		throw_is_empty();
 	}
-	return map_->counter()-1;
+	return allocator_.count()-1;
 }
 
 template<typename T>
@@ -259,7 +259,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 
 template<typename T>
 auto stack<T>::empty() const -> bool {
-	return allocator_.empty; 
+	return allocator_.empty(); 
 }
 
 #endif
