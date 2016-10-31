@@ -206,7 +206,7 @@ size_t stack<T>::count() const
 	return allocator_.count();
 }
 template <typename T>
-stack<T>::stack(size_t size) :allocator_.size_(size) {}
+stack<T>::stack(size_t size) :allocator_.(size) {}
 
 template <typename T>
 void stack<T>::push(T const &item) {
@@ -226,7 +226,7 @@ auto stack<T>::top() -> T &
 	if (allocator_.count() == 0) {
 		throw_is_empty();
 	}
-	return (*(allocator_.get() + allocator_.count() - 1);
+	return (*(allocator_.get() + allocator_.count() - 1));
 }
 template<typename T>
 auto stack<T>::top() const -> T const &
@@ -234,7 +234,7 @@ auto stack<T>::top() const -> T const &
 	if (allocator_.count() == 0) {
 		throw_is_empty();
 	}
-	return (*(allocator_.get() + allocator_.count() - 1);
+	return (*(allocator_.get() + allocator_.count() - 1));
 }
 
 template<typename T>
