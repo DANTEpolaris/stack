@@ -249,7 +249,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 		allocator<T>(right.allocator_).swap(allocator_);
 	}
 	return *this;
-
+}
 template<typename T>
 auto stack<T>::empty() const -> bool {
 	return allocator_.empty(); 
