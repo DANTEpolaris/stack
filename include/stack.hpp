@@ -246,12 +246,8 @@ auto stack<T>::throw_is_empty() const -> void
 template<typename T>
 auto stack<T>::operator=(stack const & right) -> stack & {
 	if (this != &right) {
-		stack<T> temp(right.size_);
-		while (temp.counter() < right.counter()) {
-			construct(temp.allocator_->get() + temp.allocator.map_->counter(), right.allocator_->get()[temp.allocator_.map_->counter()]);
-			++temp.allocator_.map_->counter();
-		}
-		this->swap(temp);
+		if (this != &other) {
+		allocator<T>(right.allocator_).swap(allocator_);
 	}
 	return *this;
 }
