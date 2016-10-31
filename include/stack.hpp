@@ -260,6 +260,7 @@ auto stack<T>::operator=(stack const & right) -> stack & {
 
 template<typename T>
 auto stack<T>::empty() const -> bool {
-	return allocator_.empty;
+	return allocator_.empty; 
+}
 
 #endif
