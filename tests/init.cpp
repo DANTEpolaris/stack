@@ -26,8 +26,8 @@ SCENARIO("cop", "[cop]"){
   stack<int> s;
   s.push(1);
   stack<int> s2=s;
-  REQUIRE(s2.count()==1);
-  REQUIRE(s2.top()==1);
+  REQUIRE(s.count()==1);
+  REQUIRE(s.top()==1);
 }
 
 SCENARIO("top", "[top]"){
