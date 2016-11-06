@@ -20,8 +20,8 @@ public:
 	auto reset(size_t index) /*strong*/ -> void;
 	auto test(size_t index) /*strong*/ -> bool;
 
-	auto size() /*noexcept*/ -> size_t;
-	auto counter() /*noexcept*/ -> size_t;
+	auto size() const /*noexcept*/ -> size_t;
+	auto counter() const /*noexcept*/ -> size_t;
 
 private:
 	std::unique_ptr<bool[]>  ptr_;
@@ -56,12 +56,12 @@ auto bitset::test(size_t index) -> bool
 	else throw("false_index");
 	
 }
-auto bitset::size() -> size_t
+auto bitset::size() const -> size_t
 {
 	return size_;
 }
 
-auto bitset::counter() -> size_t
+auto bitset::counter() const -> size_t
 {
 	return counter_;
 }
