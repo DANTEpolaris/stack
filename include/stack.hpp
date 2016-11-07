@@ -125,19 +125,22 @@ allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))),
 
 template<typename T>
 	allocator<T>::allocator(allocator const& other) : 
-ptr_(static_cast<T*>(operator new(other.size_))),
-size_(other.size_), map_(std::make_unique<bitset>(size_)){
-	for (size_t i; i < size_; i++)
+	ptr_(static_cast<T*>(operator new(other.size_))),
+	size_(other.size_), map_(std::make_unique<bitset>(size_)){
+	for (size_t i; i < size_; ++i)
 		construct(ptr_ + i, other.ptr_[i]);
 }
 template<typename T>
-allocator<T>::~allocator() { operator delete(ptr_); }
+allocator<T>::~allocator() {
+	destoy(ptr_, ptr_+size);
+	operator delete(ptr_); 
+}
 
 template<typename T>
 auto allocator<T>::resize() -> void
 {
 	allocator<T> buff(size_ * 2 + (size_ == 0));
-	for (size_t i = 0; i < size_; i++) construct(buff.ptr_ + i, ptr_[i]);
+	for (size_t i = 0; i < size_; ++i) construct(buff.ptr_ + i, ptr_[i]);
 	this->swap(buff);
 }
 
