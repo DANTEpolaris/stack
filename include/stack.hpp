@@ -132,7 +132,7 @@ template<typename T>
 }
 template<typename T>
 allocator<T>::~allocator() {
-	destroy(ptr_, ptr_+size);
+	destroy(ptr_, ptr_+size_);
 	operator delete(ptr_); 
 }
 
