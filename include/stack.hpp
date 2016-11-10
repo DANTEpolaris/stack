@@ -155,7 +155,7 @@ auto allocator<T>::construct(T * ptr, T const & value)->void {
 
 template<typename T>
 auto allocator<T>::destroy(T * ptr) -> void {
-	if(ptr>=ptr_&&ptr<=ptr_+this->size()){
+	if(ptr>=ptr_&&ptr<=ptr_+this->count()){
 	if (!map_->test(ptr-ptr_)){
 	ptr->~T();
 	map_->reset(ptr-ptr_);
@@ -167,7 +167,7 @@ auto allocator<T>::destroy(T * ptr) -> void {
 
 template<typename T>
 auto allocator<T>::destroy(T * first, T * last) -> void
-{	if(first>=ptr_&&last<=ptr_+this->())
+{	if(first>=ptr_&&last<=ptr_+this->count())
 	for (; first != last; ++first) {
 		destroy(&*first);
 	}
