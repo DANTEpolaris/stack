@@ -124,10 +124,11 @@ template <typename T>
 allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))), size_(size), map_(std::make_unique<bitset>(size)) {};
 
 template<typename T>
-	allocator<T>::allocator(allocator const& other) : 
+	allocator<T>::allocator(allocator const& other) :
 	ptr_(static_cast<T*>(operator new(other.size_))),
 	size_(other.size_), map_(std::make_unique<bitset>(size_)){
-	for (size_t i; i < size_; ++i)
+	for (size_t i=0; i < size_; ++i)
+		if (map_->test(ptr_ + i, other.ptr_[i]))
 		construct(ptr_ + i, other.ptr_[i]);
 }
 template<typename T>
@@ -159,6 +160,7 @@ auto allocator<T>::destroy(T * ptr) -> void {
 	ptr->~T();
 	map_->reset(ptr-ptr_);
 	}
+	else throw("error");
 }
 
 
