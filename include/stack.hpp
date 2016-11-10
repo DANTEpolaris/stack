@@ -125,7 +125,7 @@ allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))),
 
 template<typename T>
 	allocator<T>::allocator(allocator const& other) :
-	allocator<T>(other.size){
+	allocator<T>(other.size_){
 	for (size_t i=0; i < size_; ++i)
 		if (map_->test(i))
 		construct(ptr_ + i, other.ptr_[i]);
