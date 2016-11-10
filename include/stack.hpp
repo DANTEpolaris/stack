@@ -127,7 +127,7 @@ template<typename T>
 	allocator<T>::allocator(allocator const& other) :
 	allocator<T>(other.size_){
 	for (size_t i=0; i < size_; ++i)
-		if (map_->test(i))
+		if (other.map_->test(i))
 		construct(ptr_ + i, other.ptr_[i]);
 }
 template<typename T>
@@ -155,17 +155,19 @@ auto allocator<T>::construct(T * ptr, T const & value)->void {
 
 template<typename T>
 auto allocator<T>::destroy(T * ptr) -> void {
-	if (!map_->test(ptr-ptr_)&&ptr>=ptr_&&ptr<=ptr_+this->count()){
+	if(ptr>=ptr_&&ptr<=ptr_+this->size())
+	if (!map_->test(ptr-ptr_){
 	ptr->~T();
 	map_->reset(ptr-ptr_);
 	}
+}
 	else throw("error");
 }
 
 
 template<typename T>
 auto allocator<T>::destroy(T * first, T * last) -> void
-{	if(first>=ptr_&&last<=ptr_+this->count())
+{	if(first>=ptr_&&last<=ptr_+this->())
 	for (; first != last; ++first) {
 		destroy(&*first);
 	}
