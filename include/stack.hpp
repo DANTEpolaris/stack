@@ -125,8 +125,7 @@ allocator<T>::allocator(size_t size) : ptr_((T*)(operator new(size*sizeof(T)))),
 
 template<typename T>
 	allocator<T>::allocator(allocator const& other) :
-	ptr_(static_cast<T*>(operator new(other.size_))),
-	size_(other.size_), map_(std::make_unique<bitset>(size_)){
+	allocator<T>(other.size){
 	for (size_t i=0; i < size_; ++i)
 		if (map_->test(i))
 		construct(ptr_ + i, other.ptr_[i]);
