@@ -128,7 +128,7 @@ template<typename T>
 	ptr_(static_cast<T*>(operator new(other.size_))),
 	size_(other.size_), map_(std::make_unique<bitset>(size_)){
 	for (size_t i=0; i < size_; ++i)
-		if (map_->test(ptr_ + i))
+		if (map_->test(i))
 		construct(ptr_ + i, other.ptr_[i]);
 }
 template<typename T>
