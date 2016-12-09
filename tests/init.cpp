@@ -44,11 +44,11 @@ SCENARIO("empty", "[empty]"){
   REQUIRE(s2.empty());
 }
 SCENARIO("threads", "[threads]"){
-  stack<int> s;
-  std::thread t1(&stack::push, s, 1);
-  std::thread t2(&stack::pop, s);
-  t1.join();
-  t2.join();
+ stack<int> s;
+	std::thread t1([&s]() {s.push(1); });
+	std::thread t2([&s]() {s.pop(); });
+	t1.join();
+	t2.join();
   REQUIRE(s.count()==0);
 }
 
