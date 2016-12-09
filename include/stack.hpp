@@ -265,8 +265,8 @@ template<typename T>
 auto stack<T>::operator =(stack const & right)-> stack & {
 	if (this != &right) {
 		std::lock(m, right.m);
-		std::lock_guard<std::mutex> locker(m, std::adopt_lock);
-		std::lock_guard<std::mutex> locker(right.m, std::adopt_lock);
+		std::lock_guard<std::mutex> locker1(m, std::adopt_lock);
+		std::lock_guard<std::mutex> locker2(right.m, std::adopt_lock);
 		allocator<T>(right.allocator_).swap(allocator_);
 	}
 	return *this;
