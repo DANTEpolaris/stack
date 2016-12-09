@@ -200,7 +200,7 @@ auto stack<T>::operator=(const stack &other)->stack&
 template<typename T>
 auto stack<T>::empty() const->bool 
 {
-	std::lock_guard<std::mutex> locker(other.m);
+	std::lock_guard<std::mutex> locker(m);
 	return (allocator_.count() == 0);
 }
 
@@ -208,7 +208,7 @@ template <typename T>
 auto stack<T>::count() const ->size_t 
 {
 	
-	std::lock_guard<std::mutex> locker(other.m);
+	std::lock_guard<std::mutex> locker(m);
 	return allocator_.count();
 }
 
@@ -216,7 +216,7 @@ template <typename T>
 auto stack<T>::push(T const &val)->void 
 {
 	
-	std::lock_guard<std::mutex> locker(other.m);
+	std::lock_guard<std::mutex> locker(m);
 	if (allocator_.full()) 
 	{
 		allocator_.resize();
@@ -227,7 +227,7 @@ auto stack<T>::push(T const &val)->void
 template <typename T>
 auto stack<T>::pop()->std::shared_ptr<T> 
 {
-	std::lock_guard<std::mutex> locker(other.m);
+	std::lock_guard<std::mutex> locker(m);
 	if (allocator_.count() == 0) throw_is_empty();
 	std::shared_ptr<T> top_(std::make_shared<T>(std::move(allocator_.get()[allocator_.count() - 1])));
 	allocator_.destroy(allocator_.get() + allocator_.count() - 1);
@@ -237,6 +237,7 @@ template <typename T>
 auto stack<T>::throw_is_empty()const->void
 {
 	
-	std::lock_guard<std::mutex> locker(other.m);
+	std::lock_guard<std::mutex> locker(m);
 	throw("EMPTY!");
 }
+#endif
