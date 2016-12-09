@@ -189,13 +189,13 @@ auto allocator<T>::swap(allocator & other) -> void {
 	std::swap(map_, other.map_);
 	std::swap(size_, other.size_);
 }
-
 template <typename T>
 class stack
 {
 public:
 	explicit
 		stack(size_t size = 0);
+	stack(stack const & other);
 	auto operator =(stack const & other) /*strong*/ -> stack &;
 
 	auto empty() const /*noexcept*/ -> bool;
@@ -222,6 +222,8 @@ size_t stack<T>::count() const
 template <typename T>
 stack<T>::stack(size_t size) :allocator_(size), m() {}
 
+template <typename T>
+stack<T>::stack(stack const & other) : allocator_(other.allocator_), m() {}
 template <typename T>
 void stack<T>::push(T const &item) {
 	std::lock_guard<std::mutex> locker(m);
