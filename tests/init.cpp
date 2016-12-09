@@ -47,8 +47,8 @@ SCENARIO("threads", "[threads]"){
   stack<int> s;
   std::thread t1(s.push, 1);
   std::thread t2(s.pop);
-  t1.join;
-  t2.join;
+  t1.join();
+  t2.join();
   REQUIRE(s.count()==0);
 }
 
