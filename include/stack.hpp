@@ -224,7 +224,7 @@ stack<T>::stack(size_t size) :allocator_(size), m() {}
 
 template <typename T>
 stack<T>::stack(stack const & other) : allocator_(0), m() {
-std::lock_guard<std::mutex> lk2(other.m);
+std::lock_guard<std::mutex> locker(other.m);
 allocator_.swap(allocator<T>(other.allocator_));
 }
 template <typename T>
