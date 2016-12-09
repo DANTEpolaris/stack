@@ -1,6 +1,7 @@
 #include "stack.hpp"
 #include <catch.hpp>
 #include <iostream>
+#include <thread>
 using namespace std;
 
 SCENARIO("count", "[count]"){
@@ -41,5 +42,13 @@ SCENARIO("empty", "[empty]"){
   s1.push(1);
   REQUIRE(!s1.empty());
   REQUIRE(s2.empty());
+}
+SCENARIO("threads", "[threads]"){
+  stack<int> s;
+  std::thread t1(s.push, 1);
+  std::thread t2(s.pop);
+  t1.join;
+  t2.join;
+  REQUIRE(s.count()==0);
 }
 
