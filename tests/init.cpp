@@ -19,7 +19,7 @@ SCENARIO("push", "[push]"){
 SCENARIO("pop", "[pop]"){
   stack<int> s;
   s.push(1);
-  REQUIRE(*(s.pop())==1);	
+  REQUIRE(*(s.top())==1);	
   REQUIRE(s.count()==0);
 }
 
@@ -43,7 +43,7 @@ SCENARIO("Stack: top and pop threads", "threads") {
 	std::thread t1(&stack<size_t>::push, &st, 1);
 	t1.join();
 	REQUIRE(st.count() == 2);
-	REQUIRE(*st.pop() == 1);
+	REQUIRE(*st.top() == 1);
 	REQUIRE(st.empty() == false);
 	std::thread t2(&stack<size_t>::pop, &st);
 	t2.join();
