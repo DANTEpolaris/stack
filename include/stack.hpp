@@ -191,7 +191,8 @@ class stack
 {
 public:
 	explicit
-		stack(size_t size = 0);
+	stack(size_t size = 0);
+	stack(stack const & other);
 	auto operator =(stack const & other) /*strong*/ -> stack &;
 
 	auto empty() const /*noexcept*/ -> bool;
@@ -212,6 +213,9 @@ size_t stack<T>::count() const
 {
 	return allocator_.count();
 }
+
+template<typename T>
+stack<T>::stack(stack other & other): allocator_(other.allocator_), m(){}
 template <typename T>
 stack<T>::stack(size_t size) :allocator_(size), m() {} 
 
