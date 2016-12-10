@@ -213,9 +213,9 @@ size_t stack<T>::count() const
 }
 
 template<typename T>
-stack<T>::stack(stack other & other): allocator_(other.allocator_), m(){}
+stack<T>::stack(stack const & other): allocator_(other.allocator_), m(){};
 template <typename T>
-stack<T>::stack(size_t size) ::allocator_(size), m() {} 
+stack<T>::stack(size_t size):allocator_(size), m() {} ;
 
 template <typename T>
 void stack<T>::push(T const &item) {
