@@ -36,12 +36,16 @@ SCENARIO("empty", "[empty]"){
   REQUIRE(!s1.empty());
   REQUIRE(s2.empty());
 }
-SCENARIO("threads", "[threads]"){
- stack<int> s;
-	std::thread t1([&s]() {s.push(1); });
-	std::thread t2([&s]() {s.pop(); });
+SCENARIO("Stack: top and pop threads", "threads") {
+	stack<size_t> st;
+	st.push(0);
+	std::thread t1(&stack<size_t>::push, &st, 1);
 	t1.join();
+	REQUIRE(st.count() == 2);
+	REQUIRE(*st.pop() == 1);
+	REQUIRE(st.empty() == false);
+	std::thread t2(&stack<size_t>::pop, &st);
 	t2.join();
-  REQUIRE(s.count()==0);
+	REQUIRE(st.count() == 0);
+	REQUIRE(st.empty());
 }
-
