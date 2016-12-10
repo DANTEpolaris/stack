@@ -1,6 +1,5 @@
-#include <stack.hpp>
+#include "stack.hpp"
 #include <catch.hpp>
-#include <thread>
 #include <iostream>
 using namespace std;
 
@@ -14,21 +13,27 @@ SCENARIO("push", "[push]"){
   stack<int> s;
   s.push(1);
   REQUIRE(s.count()==1);
+  REQUIRE(s.top()==1);
 }
 
 SCENARIO("pop", "[pop]"){
   stack<int> s;
-  s.push(1);
-  REQUIRE(s.top()==1);	
+  s.push(1); s.pop();
   REQUIRE(s.count()==0);
 }
 
-SCENARIO("prisv", "[prisv]"){
+SCENARIO("cop", "[cop]"){
   stack<int> s;
   s.push(1);
-  stack<int> s2;
-  s2=s;
+  stack<int> s2=s;
   REQUIRE(s.count()==1);
+  REQUIRE(s.top()==1);
+}
+
+SCENARIO("top", "[top]"){
+  stack<int> s;
+  s.push(1);
+  REQUIRE(s.top()==1);
 }
 
 SCENARIO("empty", "[empty]"){
@@ -37,16 +42,5 @@ SCENARIO("empty", "[empty]"){
   REQUIRE(!s1.empty());
   REQUIRE(s2.empty());
 }
-SCENARIO("Stack: top and pop threads", "threads") {
-	stack<size_t> st;
-	st.push(0);
-	std::thread t1(&stack<size_t>::push, &st, 1);
-	t1.join();
-	REQUIRE(st.count() == 2);
-	REQUIRE(st.top() == 1);
-	REQUIRE(st.empty() == false);
-	std::thread t2(&stack<size_t>::pop, &st);
-	t2.join();
-	REQUIRE(st.count() == 0);
-	REQUIRE(st.empty());
-}
+
+
