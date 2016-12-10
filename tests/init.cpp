@@ -1,5 +1,6 @@
 #include <stack.hpp>
 #include <catch.hpp>
+#include <thread>
 #include <iostream>
 using namespace std;
 
