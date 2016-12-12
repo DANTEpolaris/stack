@@ -166,7 +166,6 @@ public:
 
 	auto push(T const & value) /*strong*/ -> void;
 	auto pop() /*strong*/ -> std::shared_ptr<T>;
-	//auto top()const -> const T&;
 
 private:
 	allocator<T> allocator_;
